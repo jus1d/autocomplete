@@ -1,0 +1,7 @@
+# Ignore binary files
+.bin/
+autocomplete*
+trie*
+
+#Ignore IDE files, folders
+.idea/
