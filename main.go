@@ -25,7 +25,6 @@ func main() {
 
 	results := tree.Autocomplete(word)
 
-	fmt.Println("=========")
 	for _, result := range results {
 		fmt.Printf("%s\n", result)
 	}
