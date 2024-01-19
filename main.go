@@ -1,13 +1,25 @@
 package main
 
 import (
+	"autocomplete/dict"
 	"autocomplete/trie"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
 )
 
 func getDictionary(path string) []string {
+	if path == "" {
+		return dict.Fruits
+	}
+
+	_, err := os.Stat(path)
+	if err != nil {
+		fmt.Printf("WARN: Couldn't found a dictionary at '%s'. Used default dictionary with fruits\n", path)
+		return dict.Fruits
+	}
+
 	content, err := os.ReadFile(path)
 	if err != nil {
 		return []string{}
@@ -17,11 +29,15 @@ func getDictionary(path string) []string {
 }
 
 func main() {
-	tree := trie.New()
-	dict := getDictionary("./dictionary.txt")
-	tree.InsertMany(dict)
+	var dictPath string
+	flag.StringVar(&dictPath, "dict", "", "Provide a path to some dictionary with custom words")
+	flag.Parse()
 
-	word := os.Args[1]
+	tree := trie.New()
+	dictionary := getDictionary(dictPath)
+	tree.InsertMany(dictionary)
+
+	word := os.Args[len(os.Args)-1]
 
 	results := tree.Autocomplete(word)
 
