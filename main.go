@@ -41,6 +41,7 @@ func main() {
 
 	results := tree.Autocomplete(word)
 
+	fmt.Printf("Autocomplete results:\n")
 	for _, result := range results {
 		fmt.Printf("%s\n", result)
 	}
